@@ -57,6 +57,28 @@ Slip Grammar should never mutate:
 The transform should only touch ordinary natural-language prose around the technical
 content.
 
+## Tokenizer Vision
+
+All of the Slip Grammar ideas should come together as a tokenizer, not as scattered
+prompt tricks.
+
+The intended tokenizer stack is:
+
+1. Protect exact spans: detect code, math, identifiers, APIs, paths, shell, config,
+   JSON, stack traces, quoted exact strings, and error text before compression.
+2. Compress intent prose: reduce instruction scaffolding with morphology compression,
+   casing normalization, and optional caveman-speak simplification.
+3. Bridge related languages: map compatible Latin-root word families across languages
+   into shared root-plus-extension forms when context makes that safe.
+4. Explore sound families: optionally test rhyme and phonetic endings after safer
+   morphology and Latin-root compression are measurable.
+5. Emit tokenizer-native units: train or adapt a tokenizer so these compressed forms
+   become native vocab units rather than only runtime text substitutions.
+
+The goal is a code-model tokenizer that spends less vocabulary and parameter budget
+on redundant natural-language surface forms, while keeping exact technical material
+lossless.
+
 ## Language Bridge Idea
 
 A later Slip Grammar direction is a Latin-root compressor for bridging related
@@ -93,8 +115,9 @@ it can also remove nuance, politeness constraints, ordering, and scope boundarie
 - Train-time Slip Grammar: canonicalize non-code natural language in training data so
   the same size code model can spend more capacity on code, logic, APIs, and exact
   syntax.
-- Tokenizer-native Slip Grammar: build the vocab system into tokenizer training
-  instead of only transforming prompts at runtime.
+- Tokenizer-native Slip Grammar: combine protected spans, morphology compression,
+  caveman-speak simplification, Latin-root bridging, and optional phonetic/rhyme
+  groups into one tokenizer training pipeline.
 - Strong protected-region parser: identify code, math, shell, paths, config, JSON,
   stack traces, quoted strings, and identifiers before any vocab rewrite happens.
 - Morphology compression: collapse casing, plural, `-ing`, `-er`, `-ed`, and related
