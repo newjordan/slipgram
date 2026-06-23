@@ -73,6 +73,21 @@ surface forms while preserving intent.
 This would need stricter safeguards than morphology-only English compression because
 false friends, idioms, named entities, and domain terms can drift across languages.
 
+## Caveman Speak Idea
+
+Another experimental direction is a "caveman speak" compressor: reduce ordinary
+instruction prose to sparse, blunt intent words while preserving exact technical
+content.
+
+For example, a prompt like "please refactor this function so it handles missing
+values without changing the public API" could compress toward "refactor function.
+handle missing values. no change public API." The point is not style. The point is
+testing whether models need less grammatical scaffolding around code tasks than we
+usually provide.
+
+This mode should be opt-in and measured carefully. It may help compress intent, but
+it can also remove nuance, politeness constraints, ordering, and scope boundaries.
+
 ## Wishlist
 
 - Train-time Slip Grammar: canonicalize non-code natural language in training data so
@@ -90,6 +105,9 @@ false friends, idioms, named entities, and domain terms can drift across languag
 - Latin bridge compressor: map compatible Latin-root word families across related
   languages into shared root-plus-extension forms for multilingual prompt and corpus
   compression.
+- Caveman speak compressor: strip ordinary prose down to terse intent words and
+  minimal grammar while preserving code, math, identifiers, APIs, paths, and exact
+  strings.
 - Reversible transform mode: preserve enough metadata to reconstruct original prose
   when needed.
 - Evaluation harness: compare original and slipped prompts on coding tasks, compile
