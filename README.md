@@ -57,6 +57,22 @@ Slip Grammar should never mutate:
 The transform should only touch ordinary natural-language prose around the technical
 content.
 
+## Language Bridge Idea
+
+A later Slip Grammar direction is a Latin-root compressor for bridging related
+languages. The goal would be to map compatible words across English, Spanish,
+French, Italian, Portuguese, and other Latin-influenced vocabularies into shared
+root-plus-extension forms.
+
+For example, related terms around `compute`, `computation`, `computacion`,
+`computazione`, and `computacao` could be represented through a shared root family
+when the surrounding context makes that safe. This is not translation. It is a
+cross-language vocabulary compression layer that tries to reduce duplicate language
+surface forms while preserving intent.
+
+This would need stricter safeguards than morphology-only English compression because
+false friends, idioms, named entities, and domain terms can drift across languages.
+
 ## Wishlist
 
 - Train-time Slip Grammar: canonicalize non-code natural language in training data so
@@ -71,6 +87,9 @@ content.
 - Rhyme and phonetic compression: later experiments for endings like `-ing`, `-er`,
   `-ning`, `-ang`, `-oach`, and `-ther`, with clear measurement because semantic
   drift risk is higher.
+- Latin bridge compressor: map compatible Latin-root word families across related
+  languages into shared root-plus-extension forms for multilingual prompt and corpus
+  compression.
 - Reversible transform mode: preserve enough metadata to reconstruct original prose
   when needed.
 - Evaluation harness: compare original and slipped prompts on coding tasks, compile
