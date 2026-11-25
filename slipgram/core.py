@@ -1,8 +1,29 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
 import re
-from typing import Iterable
+from dataclasses import dataclass
+from typing import Iterable, TypedDict
+
+
+class ProtectedSpanDict(TypedDict):
+    start: int
+    end: int
+    kind: str
+    text: str
+
+
+class TransformLogEntryDict(TypedDict):
+    start: int
+    end: int
+    original: str
+    canonical: str
+    rule: str
+
+
+class TransformResultDict(TypedDict):
+    slipped_text: str
+    protected_spans: list[ProtectedSpanDict]
+    transform_log: list[TransformLogEntryDict]
 
 
 @dataclass(frozen=True)
@@ -12,8 +33,13 @@ class ProtectedSpan:
     kind: str
     text: str
 
-    def to_dict(self) -> dict[str, object]:
-        return asdict(self)
+    def to_dict(self) -> ProtectedSpanDict:
+        return {
+            "start": self.start,
+            "end": self.end,
+            "kind": self.kind,
+            "text": self.text,
+        }
 
 
 @dataclass(frozen=True)
@@ -24,8 +50,14 @@ class TransformLogEntry:
     canonical: str
     rule: str
 
-    def to_dict(self) -> dict[str, object]:
-        return asdict(self)
+    def to_dict(self) -> TransformLogEntryDict:
+        return {
+            "start": self.start,
+            "end": self.end,
+            "original": self.original,
+            "canonical": self.canonical,
+            "rule": self.rule,
+        }
 
 
 @dataclass(frozen=True)
@@ -34,7 +66,7 @@ class TransformResult:
     protected_spans: list[ProtectedSpan]
     transform_log: list[TransformLogEntry]
 
-    def to_dict(self) -> dict[str, object]:
+    def to_dict(self) -> TransformResultDict:
         return {
             "slipped_text": self.slipped_text,
             "protected_spans": [span.to_dict() for span in self.protected_spans],

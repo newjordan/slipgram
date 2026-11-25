@@ -4,18 +4,46 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "slipgram"
-version = "0.1.0"
-description = "Protected pre-tokenizer vocabulary canonicalization for code-oriented prompts."
+version = "0.2.0"
+description = "Protected pre-tokenizer that compresses prose without touching exact technical spans."
 readme = "README.md"
 requires-python = ">=3.10"
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Text Processing",
+    "Typing :: Typed",
+]
 dependencies = []
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+test = ["pytest>=8", "hypothesis>=6.100"]
+dev = ["pytest>=8", "hypothesis>=6.100", "mypy>=1.11"]
+
+[project.urls]
+Homepage = "https://github.com/newjordan/slipgram"
+Repository = "https://github.com/newjordan/slipgram"
 
 [project.scripts]
 slipgram = "slipgram.cli:main"
 
+[tool.setuptools.packages.find]
+include = ["slipgram*"]
+
+[tool.setuptools.package-data]
+slipgram = ["py.typed"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["slipgram", "scripts"]
+warn_unused_ignores = true
+show_error_codes = true
